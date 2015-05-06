@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Silk Demo</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+</body>
+	<section class="canvas-outer clearfix">
+		<canvas id="canvas">Canvas is not supported on this browser!</canvas>
+	</section>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="lib/three.js"></script>
+	
+	<script src="app/paint.js"></script>
+
+	<script id="vertexShader" type="x-shader/x-vertex">
+		precision mediump float;
+		precision mediump int;
+
+		uniform mat4 modelViewMatrix; // optional
+		uniform mat4 projectionMatrix; // optional
+
+		attribute vec3 position;
+		attribute vec4 color;
+
+		varying vec3 vPosition;
+		varying vec4 vColor;
+
+		void main()	{
+
+			vPosition = position;
+			vColor = color;
+
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+		}
+	</script>
+
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		precision mediump float;
+		precision mediump int;
+
+		uniform float time;
+
+		varying vec3 vPosition;
+		varying vec4 vColor;
+
+		void main()	{
+
+			vec4 color = vec4( vColor );
+			color.r += sin( vPosition.x * 10.0 + time ) * 0.5;
+
+			gl_FragColor = color;
+
+		}
+	</script>
+
+	<script src="app/app.js"></script>
+</html>
