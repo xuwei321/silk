@@ -9,7 +9,7 @@ var d3 = (function() {
 		meshes: [],
 		silkWidth: 24,
 		offsetAnchorX: 3,
-		material: new THREE.MeshPhongMaterial({color: 0xeb008b, shading: THREE.FlatShading, side: THREE.DoubleSide}),
+		material: new THREE.MeshPhongMaterial({color: 0xad006f, shading: THREE.FlatShading, side: THREE.DoubleSide}),
 		init: function(elem, props) {
 			this.elem = elem = elem || "canvas";
 			this.props = props = props || {};
