@@ -15,7 +15,13 @@ var d3 = (function() {
 			this.props = props = props || {};
 			this.meshes.length = 0;
 			var scene = this.scene = new THREE.Scene();
-			var renderer = this.renderer = new THREE.WebGLRenderer();
+			var renderer = null;
+			if (/CanvasRenderer/.test(window.location.hash)) {
+				renderer = this.renderer = new THREE.CanvasRenderer();
+			} else {
+				renderer = this.renderer = new THREE.WebGLRenderer();
+			}
+
 			var width = props.width || window.innerWidth;
 			var height = props.height || window.innerHeight
 			this.offsetX = props.d2Width/2;

@@ -30,19 +30,27 @@ function initCanvas(elem, props) {
 
     /* Draw on canvas */
     function drawOnCanvas(color, plots) {
+        if (plots.length <= 1) {
+            return;
+        }
         ctx.strokeStyle = color;
         ctx.beginPath();
-        ctx.moveTo(plots[0].x, plots[0].y);
-
-        for (var i = 1; i < plots.length; i++) {
-            ctx.lineTo(plots[i].x, plots[i].y);
-        }
+        ctx.moveTo(plots[plots.length -2].x, plots[plots.length -2].y);
+        ctx.lineTo(plots[plots.length -1].x, plots[plots.length -1].y);
         ctx.stroke();
-    }
 
-    function drawFromStream(message) {
-        if (!message || message.plots.length < 1) return;
-        drawOnCanvas(message.color, message.plots);
+        // for (var i = 1; i < plots.length; i++) {
+        //     ctx.lineTo(plots[i].x, plots[i].y);
+        // }
+        /**
+        if(lastPt!=null) {
+          ctx.beginPath();
+          ctx.moveTo(lastPt.x, lastPt.y);
+          ctx.lineTo(e.touches[0].pageX, e.touches[0].pageY);
+          ctx.stroke();
+        }
+        lastPt = {x:e.touches[0].pageX, y:e.touches[0].pageY};
+        */
     }
 
     var isActive = false;
@@ -55,6 +63,10 @@ function initCanvas(elem, props) {
 
         var x = isTouchSupported ? (e.targetTouches[0].pageX - canvas.offsetLeft) : (e.offsetX || e.layerX - canvas.offsetLeft);
         var y = isTouchSupported ? (e.targetTouches[0].pageY - canvas.offsetTop) : (e.offsetY || e.layerY - canvas.offsetTop);
+        if (plots.length > 0 && Math.abs(plots[plots.length -1].x - x) <= 1 && Math.abs(plots[plots.length -1].y - y) <= 1) {
+            return;
+        }
+
         plots.push({
             x: (x << 0),
             y: (y << 0)

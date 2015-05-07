@@ -19,18 +19,27 @@
     <![endif]-->
   </head>
   <body>
-    <div class="btn-group" role="group" aria-label="...">
-      <button type="button" class="btn btn-default">Paint</button>
-      <button type="button" class="btn btn-default">3D</button>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
+  <div role="tabpanel">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#paint" aria-controls="paint" role="tab" data-toggle="tab">Paint</a>
+      </li>
+      <li role="presentation">
+        <a href="#d3demo" aria-controls="d3demo" role="tab" data-toggle="tab">3D</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="paint">
         <canvas id="canvas"></canvas>
       </div>
-      <div class="col-md-6">
+      <div role="tabpanel" class="tab-pane" id="d3demo">
         <div id="d3-container"></div>
       </div>
     </div>
+  </div>
     
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -44,7 +53,6 @@
     <script src="app/2d.js"></script>
 
     <script type="x-shader/x-vertex" id="vertexshader">
-
       uniform float amplitude;
 
       attribute vec3 displacement;
@@ -53,33 +61,24 @@
       varying vec3 vColor;
 
       void main() {
-
         vec3 newPosition = position + amplitude * displacement;
-
         vColor = customColor;
-
         gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
-
       }
-
     </script>
 
     <script type="x-shader/x-fragment" id="fragmentshader">
-
       uniform vec3 color;
       uniform float opacity;
 
       varying vec3 vColor;
 
       void main() {
-
         gl_FragColor = vec4( vColor * color, opacity );
-
       }
-
     </script>
 
-      <script src="app/3d.js"></script>
-      <script src="app/app.js"></script>
+    <script src="app/3d.js"></script>
+    <script src="app/app.js"></script>
   </body>
 </html>
